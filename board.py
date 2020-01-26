@@ -17,13 +17,13 @@ class Board():
         for row in range(3):
             for col in range(8):
                 if self.getSquareColor(row, col) == PlayerColor.white:
-                    square = self.boardSquares[row, col]
+                    square = self.squares[row, col]
                     square.piece = Pawn(PlayerColor.black, square)
                     
         for row in range(5,8):
             for col in range(8):
                 if self.getSquareColor(row, col) == PlayerColor.white:
-                    square = self.boardSquares[row, col]
+                    square = self.squares[row, col]
                     square.piece = Pawn(PlayerColor.white, square)
     
     def setupBoard(self):
@@ -31,11 +31,11 @@ class Board():
             for col in range(8):
                 pos = (col * self.blockSize, row * self.blockSize)
                 size = (self.blockSize, self.blockSize)
-                self.boardSquares[row, col] = BoardSquare(self.getSquareColor(row, col), pos, size)
+                self.squares[row, col] = BoardSquare(self.getSquareColor(row, col), pos, size)
 
     def __init__(self):
         self.boardSize = 8
-        self.boardSquares = matrix([[None] * self.boardSize] * self.boardSize)
+        self.squares = matrix([[None] * self.boardSize] * self.boardSize)
 
         self.blockSize = 100
 
@@ -45,14 +45,14 @@ class Board():
     def display(self, screen):
         for row in range(self.boardSize):
             for col in range(self.boardSize):
-                square = self.boardSquares[row, col]
+                square = self.squares[row, col]
                 square.display(screen)
 
     def getSquareList(self):
-        return np.asarray(self.boardSquares).reshape(-1)
+        return np.asarray(self.squares).reshape(-1)
 
     def getSquarePosition(self, square):
-        for pos, _square in np.ndenumerate(self.boardSquares):
+        for pos, _square in np.ndenumerate(self.squares):
             if _square == square:
                 return pos
 

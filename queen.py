@@ -38,19 +38,22 @@ class Queen(Piece):
         currentPos = board.getSquarePosition(self.square)
         
         killed = None
-        if abs(row - currentPos[0]) > 1:
+        distance = abs(row - currentPos[0])
+        if distance > 1:
             sign = lambda x: (1, -1)[x<0]
             jumpedPieceRow = row - sign(row - currentPos[0])
             jumpedPieceCol = col - sign(col - currentPos[1])
-            jumpedPiece = board.boardSquares[jumpedPieceRow, jumpedPieceCol].piece
+            jumpedPiece = board.squares[jumpedPieceRow, jumpedPieceCol].piece
 
-            for i in range(currentPos[0] + sign(row-currentPos[0]), jumpedPieceRow, sign(row-currentPos[0])):
-                for j in range(currentPos[1] + sign(col-currentPos[1]), jumpedPieceCol, sign(col-currentPos[1])):
-                    if board.boardSquares[i, j].piece:
-                        return None
+            for i in range(1, distance - 1):
+                rowToCheck = currentPos[0] + sign(row - currentPos[0]) * i
+                colToCheck = currentPos[1] + sign(col - currentPos[1]) * i
+                if board.squares[rowToCheck, colToCheck].piece:
+                    return None
+
             if jumpedPiece:
                 if jumpedPiece.color == self.color:
                     return None
                 killed = jumpedPiece
 
-        return Move(self, board.boardSquares[row, col], killed)
+        return Move(self, board.squares[row, col], killed)

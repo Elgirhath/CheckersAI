@@ -33,6 +33,6 @@ class Piece():
             return False
         if col < 0 or col >= board.boardSize:
             return False
-        if board.boardSquares[row, col].piece != None:
+        if board.squares[row, col].piece != None:
             return False
         return True
