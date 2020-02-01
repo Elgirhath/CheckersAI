@@ -12,9 +12,9 @@ possibleMoveCircleRadius = 20
 
 class BoardSquare():
     def getColor(self):
-        if self.playerColor == PlayerColor.black and not self.selected:
+        if self.playerColor == PlayerColor.Black and not self.selected:
             return blackSquareColor
-        elif self.playerColor == PlayerColor.black:
+        elif self.playerColor == PlayerColor.Black:
             return selectedBlackColor
         elif not self.selected:
             return whiteSquareColor
@@ -28,7 +28,10 @@ class BoardSquare():
         self.piece = None
         self.pos = pos
         self.size = size
-        self.button = Button(pos, size)
+
+    def makeButton(self):
+        self.button = Button(self.pos, self.size)
+        
 
     def display(self, screen):
         color = self.getColor()

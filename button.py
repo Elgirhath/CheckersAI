@@ -1,4 +1,3 @@
-import pygame
 from button_controller import ButtonController
 
 class Button():

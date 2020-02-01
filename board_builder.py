@@ -1,10 +1,8 @@
-from pawn import Pawn
-from queen import Queen
-from board import Board
 from player_color import PlayerColor
+import copy
 
-white = PlayerColor.white
-black = PlayerColor.black
+white = PlayerColor.White
+black = PlayerColor.Black
 
 class BoardBuilder:
     def __init__(self, board):
@@ -21,16 +19,17 @@ class BoardBuilder:
             square = self.board.squares[setting.row, setting.column]
             square.piece = pieceClass(setting.color, square)
 
-    def setup(self):
-        white = [
-            (Pawn, 1, 1),
-            (Queen, 5, 3)
-        ]
-        black = [
-            (Pawn, 6, 6),
-            (Queen, 0, 6)
-        ]
-        self.build(self.convertToSettings(white, black))
+    def copy(self, board):
+        for i in range(self.board.size):
+            for j in range(self.board.size):
+                self.board.squares[i, j].piece = None
+                copiedPiece = board.squares[i, j].piece
+                if copiedPiece:
+                    piece = self.board.squares[i, j].piece
+                    piece = copy.copy(copiedPiece)
+                    piece.square = self.board.squares[i, j]
+                    self.board.squares[i, j].piece = piece
+
 
     def convertToSettings(self, whiteSettings, blackSettings):
         settings = []

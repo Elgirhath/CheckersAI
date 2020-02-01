@@ -1,5 +1,4 @@
 from button_controller import ButtonController
-from player_color import PlayerColor
 
 class PlayerController():
     def __init__(self, board, gameManager, color):

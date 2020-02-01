@@ -1,5 +1,5 @@
 from enum import Enum
 
 class PlayerColor(Enum):
-    white = 1
-    black = 2
+    White = False
+    Black = True

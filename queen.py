@@ -9,7 +9,7 @@ blackIcon = './graphics/black_queen.png'
 class Queen(Piece):
     def __init__(self, color, square):
         super().__init__(color, square)
-        self.icon = pygame.image.load(whiteIcon if color == PlayerColor.white else blackIcon)
+        self.icon = pygame.image.load(whiteIcon if color == PlayerColor.White else blackIcon)
 
     def getPossibleMoves(self, board):
         (row, col) = board.getSquarePosition(self.square)

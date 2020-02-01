@@ -1,20 +1,27 @@
-import numpy as np
 from player_color import PlayerColor
-from button_controller import ButtonController
 from pawn import Pawn
 from queen import Queen
 
-class GameManager:
-    turnColor = PlayerColor.white
-    waitingForMove = True
 
-    def __init__(self, board):
+class GameManager:
+
+    def __init__(self, board, turnColor = PlayerColor.White):
         self.board = board
         self.pieceToMove = None
+        self.turnColor = turnColor
 
     def setControllers(self, whiteController, blackController):
         self.whiteController = whiteController
         self.blackController = blackController
+
+    def hasLost(self):
+        if self.pieceToMove:
+            return False # we might have no move right now, but turn goes to opposite player, so we haven't lost yet
+
+        for piece in self.board.getArmy(self.turnColor):
+            if piece.getPossibleMoves(self.board):
+                return False
+        return True
 
     def getAllAvailableMoves(self):
         needToKill = False
@@ -41,26 +48,26 @@ class GameManager:
         return list(move for move in currentPieceAvailableMoves if move in allAvailableMoves)
 
     def update(self):
-        currentController = self.whiteController if self.turnColor == PlayerColor.white else self.blackController
+        currentController = self.whiteController if self.turnColor == PlayerColor.White else self.blackController
         if len(self.getAllAvailableMoves()) == 0:
             if self.pieceToMove:
                 self.changeTurn()
+                return
             else:
-                return PlayerColor.black if self.turnColor == PlayerColor.white else PlayerColor.white
+                return PlayerColor.Black if self.turnColor == PlayerColor.White else PlayerColor.White
         move = currentController.getMove()
         if move:
             self.move(move)
-        return None
 
     def promotePawn(self, pawn):
         pawn.square.piece = Queen(pawn.color, pawn.square)
         pawn.square = None
 
     def shouldBePromoted(self, piece):
-        if self.board.getSquarePosition(piece.square)[0] == 7 and piece.color == PlayerColor.black and type(piece) == Pawn:
+        if self.board.getSquarePosition(piece.square)[0] == 7 and piece.color == PlayerColor.Black and type(piece) == Pawn:
             return True
             
-        if self.board.getSquarePosition(piece.square)[0] == 0 and piece.color == PlayerColor.white and type(piece) == Pawn:
+        if self.board.getSquarePosition(piece.square)[0] == 0 and piece.color == PlayerColor.White and type(piece) == Pawn:
             return True
 
     def move(self, move):
@@ -76,6 +83,9 @@ class GameManager:
         if move.killedPiece and not promoted:
             grantNextMove = True
             self.pieceToMove = move.piece
+            if not self.getAllAvailableMoves():
+                grantNextMove = False
+                self.pieceToMove = None
 
         if not grantNextMove:
             self.changeTurn()
@@ -92,4 +102,4 @@ class GameManager:
         self.pieceToMove = None
         self.clearPossibleMoves()
         self.deselect()
-        self.turnColor = PlayerColor.white if self.turnColor == PlayerColor.black else PlayerColor.black
+        self.turnColor = PlayerColor.White if self.turnColor == PlayerColor.Black else PlayerColor.Black

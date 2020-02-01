@@ -1,50 +1,51 @@
 import numpy as np
 from numpy import matrix
-from piece import Piece
 from pawn import Pawn
-from queen import Queen
 from player_color import PlayerColor
 from board_square import BoardSquare
-import pygame
 
 class Board():
     def getSquareColor(self, row, col):
         if (row + col) % 2:
-            return PlayerColor.black
-        return PlayerColor.white
+            return PlayerColor.Black
+        return PlayerColor.White
     
     def setupPawns(self):
         for row in range(3):
             for col in range(8):
-                if self.getSquareColor(row, col) == PlayerColor.white:
+                if self.getSquareColor(row, col) == PlayerColor.Black:
                     square = self.squares[row, col]
-                    square.piece = Pawn(PlayerColor.black, square)
+                    square.piece = Pawn(PlayerColor.Black, square)
                     
         for row in range(5,8):
             for col in range(8):
-                if self.getSquareColor(row, col) == PlayerColor.white:
+                if self.getSquareColor(row, col) == PlayerColor.Black:
                     square = self.squares[row, col]
-                    square.piece = Pawn(PlayerColor.white, square)
+                    square.piece = Pawn(PlayerColor.White, square)
     
     def setupBoard(self):
-        for row in range(8):
-            for col in range(8):
+        for row in range(self.size):
+            for col in range(self.size):
                 pos = (col * self.blockSize, row * self.blockSize)
                 size = (self.blockSize, self.blockSize)
                 self.squares[row, col] = BoardSquare(self.getSquareColor(row, col), pos, size)
 
     def __init__(self):
-        self.boardSize = 8
-        self.squares = matrix([[None] * self.boardSize] * self.boardSize)
+        self.size = 8
+        self.squares = matrix([[None] * self.size] * self.size)
 
         self.blockSize = 100
 
         self.setupBoard()
-        self.setupPawns()
+
+    def setupUI(self):
+        for row in range(self.size):
+            for col in range(self.size):
+                self.squares[row, col].makeButton()
 
     def display(self, screen):
-        for row in range(self.boardSize):
-            for col in range(self.boardSize):
+        for row in range(self.size):
+            for col in range(self.size):
                 square = self.squares[row, col]
                 square.display(screen)
 
