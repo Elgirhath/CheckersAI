@@ -1,14 +1,16 @@
 import pygame
 import sys
 
-from ai.ai_controller import AiController
+from controllers.ai_controller import AiController
+from controllers.player_controller import PlayerController
 from board import Board
 from board_builder import BoardBuilder
 from button_controller import ButtonController
 from game_manager import GameManager
 from player_color import PlayerColor
-from player_controller import PlayerController
 from tests import e2e_tests as tests
+from game_data import GameState
+import ai.create_database
 
 board = Board()
 board.setupPawns()
@@ -29,16 +31,17 @@ player2 = AiController(board, gameManager, PlayerColor.Black)
 gameManager.setControllers(player1, player2)
 
 while True:
-    screen.fill((0,0,0))
+    screen.fill((0, 0, 0))
     ButtonController.update()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit(0)
 
-    gameResult = gameManager.update()
-    if gameResult:
-        print(gameResult)
+    gameManager.update()
+    gameState = gameManager.gameData.state
+    if gameState and gameState != GameState.InProgress:
+        print(gameManager.gameData.state)
         sys.exit(0)
 
     board.display(screen)

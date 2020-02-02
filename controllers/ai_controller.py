@@ -2,7 +2,7 @@ from time import time, sleep
 from ai.board_state_tree import BoardStateTree
 
 timePerMove = 0.
-depth = 4
+depth = 2
 
 class AiController:
     def __init__(self, board, gameManager, color):

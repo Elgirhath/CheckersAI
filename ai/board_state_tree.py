@@ -1,8 +1,11 @@
-from player_color import PlayerColor
-from enum import Enum
-from ai.evaluate_engine import Evaluator
-import ai.virtualizer as virtualizer
 import math
+from enum import Enum
+
+import ai.virtualizer as virtualizer
+from ai.evaluate_engine import Evaluator
+from player_color import PlayerColor
+from game_data import GameState
+import game_settings
 
 class Type(Enum):
     Maximizer = False
@@ -46,13 +49,19 @@ class BoardStateTree:
             return True
         return False
 
+    def evaluatePosition(self):
+        if self.gameManager.gameData.state == GameState.WhiteWon:
+            return math.inf
+        elif self.gameManager.gameData.state == GameState.BlackWon:
+            return -math.inf
+        elif self.gameManager.gameData.isDraw():
+            return 0
+        else:
+            return Evaluator.evaluateBoard(self.resultBoard)
+
     def createChildTrees(self, depth):
         if depth == 0:
-            if self.gameManager.hasLost():
-                lostColor = self.gameManager.turnColor
-                boardValue = math.inf if lostColor == PlayerColor.Black else -math.inf
-            else:
-                boardValue = Evaluator.evaluateBoard(self.resultBoard)
+            boardValue = self.evaluatePosition()
             self.alpha = boardValue
             self.beta = boardValue
             return self

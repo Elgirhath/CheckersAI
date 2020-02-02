@@ -1,14 +1,16 @@
 from player_color import PlayerColor
 from pawn import Pawn
 from queen import Queen
-
+from game_data import GameData, GameState
 
 class GameManager:
-
     def __init__(self, board, turnColor = PlayerColor.White):
         self.board = board
         self.pieceToMove = None
         self.turnColor = turnColor
+        self.whiteController = None
+        self.blackController = None
+        self.gameData = GameData()
 
     def setControllers(self, whiteController, blackController):
         self.whiteController = whiteController
@@ -49,12 +51,17 @@ class GameManager:
 
     def update(self):
         currentController = self.whiteController if self.turnColor == PlayerColor.White else self.blackController
+        if self.gameData.isDraw():
+            self.gameData.state = GameState.Draw
+            return
         if len(self.getAllAvailableMoves()) == 0:
             if self.pieceToMove:
                 self.changeTurn()
                 return
             else:
-                return PlayerColor.Black if self.turnColor == PlayerColor.White else PlayerColor.White
+                # lost game
+                self.gameData.state = GameState.WhiteWon if self.turnColor == PlayerColor.Black else GameState.BlackWon
+                return
         move = currentController.getMove()
         if move:
             self.move(move)
@@ -66,15 +73,16 @@ class GameManager:
     def shouldBePromoted(self, piece):
         if self.board.getSquarePosition(piece.square)[0] == 7 and piece.color == PlayerColor.Black and type(piece) == Pawn:
             return True
-            
+
         if self.board.getSquarePosition(piece.square)[0] == 0 and piece.color == PlayerColor.White and type(piece) == Pawn:
             return True
+        return False
 
     def move(self, move):
-        grantNextMove = False
-
+        self.gameData.addMove(self.turnColor, type(move.piece), move.toNumericalExpression(self.board))
         move.execute()
 
+        grantNextMove = False
         promoted = False
         if self.shouldBePromoted(move.piece):
             self.promotePawn(move.piece)
