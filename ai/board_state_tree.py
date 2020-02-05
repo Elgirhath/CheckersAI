@@ -2,7 +2,7 @@ import math
 from enum import Enum
 
 import ai.virtualizer as virtualizer
-from ai.evaluate_engine import Evaluator
+from ai.static_evaluator import StaticEvaluator
 from player_color import PlayerColor
 from game_data import GameState
 import game_settings
@@ -12,7 +12,7 @@ class Type(Enum):
     Minimizer = True
 
 class BoardStateTree:
-    def __init__(self, board, gameManager, parent = None):
+    def __init__(self, board, gameManager, evaluator, parent = None, move = None):
         self.resultBoard = board
         self.children = []
         self.parent = parent
@@ -23,11 +23,13 @@ class BoardStateTree:
             self.alpha = -math.inf
             self.beta = math.inf
         self.gameManager = gameManager
+        self.evaluator = evaluator
         self.type = Type.Maximizer if self.gameManager.turnColor == PlayerColor.White else Type.Minimizer
+        self.move = move
 
     @staticmethod
-    def createTree(board, depth, gameManager):
-        root = BoardStateTree(board, gameManager, None)
+    def createTree(board, depth, gameManager, evaluator):
+        root = BoardStateTree(board, gameManager, evaluator, None)
         return root.createChildTrees(depth)
 
     def getBestMove(self):
@@ -57,7 +59,7 @@ class BoardStateTree:
         elif self.gameManager.gameData.isDraw():
             return 0
         else:
-            return Evaluator.evaluateBoard(self.resultBoard)
+            return self.evaluator.evaluateBoard(self.gameManager)
 
     def createChildTrees(self, depth):
         if depth == 0:
@@ -84,8 +86,7 @@ class BoardStateTree:
 
         virtualMove = move.switchBoard(board, virtualBoard)
         virtualGameManager = virtualizer.createVirtualGameManager(self.gameManager, virtualBoard)
-        virtualGameManager.move(virtualMove)
+        virtualGameManager.executeMove(virtualMove)
 
-        childStateTree = BoardStateTree(virtualBoard, virtualGameManager, self)
-        childStateTree.move = move
+        childStateTree = BoardStateTree(virtualBoard, virtualGameManager, self.evaluator, self, move=move)
         return childStateTree

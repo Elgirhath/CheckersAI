@@ -49,22 +49,28 @@ class GameManager:
         currentPieceAvailableMoves = piece.getPossibleMoves(self.board)
         return list(move for move in currentPieceAvailableMoves if move in allAvailableMoves)
 
-    def update(self):
-        currentController = self.whiteController if self.turnColor == PlayerColor.White else self.blackController
+    def updateGameState(self):
         if self.gameData.isDraw():
             self.gameData.state = GameState.Draw
             return
         if len(self.getAllAvailableMoves()) == 0:
+            if not self.pieceToMove:
+                self.gameData.state = GameState.WhiteWon if self.turnColor == PlayerColor.Black else GameState.BlackWon
+                return
+
+    def update(self):
+        if self.gameData.state != GameState.InProgress:
+            return
+
+        if len(self.getAllAvailableMoves()) == 0:
             if self.pieceToMove:
                 self.changeTurn()
                 return
-            else:
-                # lost game
-                self.gameData.state = GameState.WhiteWon if self.turnColor == PlayerColor.Black else GameState.BlackWon
-                return
+
+        currentController = self.whiteController if self.turnColor == PlayerColor.White else self.blackController
         move = currentController.getMove()
         if move:
-            self.move(move)
+            self.executeMove(move)
 
     def promotePawn(self, pawn):
         pawn.square.piece = Queen(pawn.color, pawn.square)
@@ -78,7 +84,7 @@ class GameManager:
             return True
         return False
 
-    def move(self, move):
+    def executeMove(self, move):
         self.gameData.addMove(self.turnColor, type(move.piece), move.toNumericalExpression(self.board))
         move.execute()
 
@@ -97,6 +103,8 @@ class GameManager:
 
         if not grantNextMove:
             self.changeTurn()
+
+        self.updateGameState()
 
     def deselect(self):
         for square in self.board.getSquareList():

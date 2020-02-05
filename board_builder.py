@@ -1,4 +1,6 @@
 from player_color import PlayerColor
+from pawn import Pawn
+from queen import Queen
 import copy
 
 white = PlayerColor.White

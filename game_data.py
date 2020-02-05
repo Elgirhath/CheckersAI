@@ -29,12 +29,12 @@ class GameData:
 
     def isDraw(self):
         blackMoves = list(move for move in self.moves if move.color == PlayerColor.Black)
-        if len(blackMoves) < game_settings.move_repeat_to_draw * 2:
+        if len(blackMoves) < game_settings.move_repeat_to_draw * 2: # game is shorter than required moves to draw
             return False
 
         lastBlackMoves = list((move.sourcePos, move.destPos, move.killedPos) for move in blackMoves[-game_settings.move_repeat_to_draw:])
 
-        if any(killed for _, _, killed in lastBlackMoves if killed is not None):
+        if any(killed for _, _, killed in lastBlackMoves if killed is not None): # any piece was taken in last black moves
             return False
 
         whiteMoves = list(move for move in self.moves if move.color == PlayerColor.White)

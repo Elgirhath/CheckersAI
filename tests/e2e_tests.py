@@ -57,3 +57,15 @@ def win_the_game_if_possible(boardBuilder):
         (Pawn, 6, 3)
     ]
     boardBuilder.build(boardBuilder.convertToSettings(white, black))
+
+    
+def sack_queen_to_win(boardBuilder):
+    white = [
+        (Pawn, 2, 7),
+        (Queen, 4, 7),
+        (Queen, 3, 0)
+    ]
+    black = [
+        (Queen, 7, 0)
+    ]
+    boardBuilder.build(boardBuilder.convertToSettings(white, black))

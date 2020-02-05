@@ -1,15 +1,13 @@
 from player_color import PlayerColor
 from pawn import Pawn
 
-class Evaluator:
-
-    @staticmethod
-    def evaluateBoard(board):
+class StaticEvaluator:
+    def evaluateBoard(self, gameManager):
+        board = gameManager.board
         whiteArmy = board.getArmy(PlayerColor.White)
         blackArmy = board.getArmy(PlayerColor.Black)
 
         sum = 0.
-
         for piece in whiteArmy:
             if type(piece) == Pawn:
                 sum += 1.

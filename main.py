@@ -10,7 +10,8 @@ from game_manager import GameManager
 from player_color import PlayerColor
 from tests import e2e_tests as tests
 from game_data import GameState
-import ai.create_database
+from ai.game_simulator import GameSimulator
+from ai.smart_evaluator import SmartEvaluator
 
 board = Board()
 board.setupPawns()
@@ -20,18 +21,19 @@ clock = pygame.time.Clock()
 
 board.setupUI()
 boardBuilder = BoardBuilder(board)
-# tests.trap_a_queen(boardBuilder)
+# tests.sack_queen_to_win(boardBuilder)
 gameManager = GameManager(board)
 
-player1 = PlayerController(board, gameManager, PlayerColor.White)
-# player1 = AiController(board, gameManager, PlayerColor.White)
+# player1 = PlayerController(board, gameManager, PlayerColor.White)
+player1 = AiController(board, gameManager, PlayerColor.White, SmartEvaluator(1))
 # player2 = PlayerController(board, gameManager, PlayerColor.Black)
-player2 = AiController(board, gameManager, PlayerColor.Black)
+player2 = AiController(board, gameManager, PlayerColor.Black, SmartEvaluator(50))
 
 gameManager.setControllers(player1, player2)
+board.display(screen)
+pygame.display.flip()
 
 while True:
-    screen.fill((0, 0, 0))
     ButtonController.update()
 
     for event in pygame.event.get():
@@ -44,6 +46,7 @@ while True:
         print(gameManager.gameData.state)
         sys.exit(0)
 
+    screen.fill((0, 0, 0))
     board.display(screen)
     pygame.display.flip()
     clock.tick(60)
