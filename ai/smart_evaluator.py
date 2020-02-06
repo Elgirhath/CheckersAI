@@ -6,7 +6,7 @@ class SmartEvaluator:
 
     def __init__(self, epochs):
         self.filePath = "C:/Users/Konrad/Documents/AGH/PSI/ai_checkers/ai/games.csv"
-        self.neuralNetwork = NeuralNetwork(12)
+        self.neuralNetwork = NeuralNetwork(8)
         self.neuralNetwork.fitToCsv(self.filePath, epochs)
 
     def evaluateBoard(self, gameManager):
