@@ -30,16 +30,18 @@ class BoardSquare():
         self.size = size
 
     def makeButton(self):
-        self.button = Button(self.pos, self.size)
+        self.button = Button((self.pos[0] * self.size, self.pos[1] * self.size), (self.size, self.size))
         
 
     def display(self, screen):
         color = self.getColor()
 
-        rect = pygame.Rect(self.pos[0], self.pos[1], self.pos[0] + self.size[0], self.pos[1] + self.size[1])
+        pixel_pos = (self.pos[0] * self.size, self.pos[1] * self.size)
+
+        rect = pygame.Rect(pixel_pos[0], pixel_pos[1], pixel_pos[0] + self.size, pixel_pos[1] + self.size)
         pygame.draw.rect(screen, color, rect)
         if self.isPossibleMove:
-            circleCenter = (int(self.pos[0] + (self.size[0] / 2)), int(self.pos[1] + (self.size[1] / 2)))
+            circleCenter = (int(pixel_pos[0] + (self.size / 2)), int(pixel_pos[1] + (self.size / 2)))
             pygame.draw.circle(screen, possibleMoveCircleColor, circleCenter, possibleMoveCircleRadius)
         if self.piece:
-            self.piece.display(screen, self.pos, self.size)
+            self.piece.display(screen, pixel_pos, (self.size, self.size))

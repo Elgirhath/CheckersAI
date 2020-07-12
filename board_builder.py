@@ -24,13 +24,13 @@ class BoardBuilder:
     def copy(self, board):
         for i in range(self.board.size):
             for j in range(self.board.size):
-                self.board.squares[i, j].piece = None
+                board_square = self.board.squares[i, j]
+                board_square.piece = None
                 copiedPiece = board.squares[i, j].piece
                 if copiedPiece:
-                    piece = self.board.squares[i, j].piece
                     piece = copy.copy(copiedPiece)
-                    piece.square = self.board.squares[i, j]
-                    self.board.squares[i, j].piece = piece
+                    piece.square = board_square
+                    board_square.piece = piece
 
 
     def convertToSettings(self, whiteSettings, blackSettings):

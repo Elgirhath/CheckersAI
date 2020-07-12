@@ -26,9 +26,18 @@ class GameData:
     def addMove(self, color, pieceType, move):
         sourcePos, destPos, killedPos = move
         self.moves.append(MoveRecord(color, pieceType, sourcePos, destPos, killedPos))
+        self.cleanOverhead()
+
+    def cleanOverhead(self):
+        move_overhead = len(self.moves) - game_settings.moves_to_keep
+        if move_overhead > 0:
+            del self.moves[0 : move_overhead]
+
+    def getMovesOf(self, player_color):
+        return list(move for move in self.moves if move.color == PlayerColor.Black)
 
     def isDraw(self):
-        blackMoves = list(move for move in self.moves if move.color == PlayerColor.Black)
+        blackMoves = self.getMovesOf(PlayerColor.Black)
         if len(blackMoves) < game_settings.move_repeat_to_draw * 2: # game is shorter than required moves to draw
             return False
 
@@ -37,7 +46,7 @@ class GameData:
         if any(killed for _, _, killed in lastBlackMoves if killed is not None): # any piece was taken in last black moves
             return False
 
-        whiteMoves = list(move for move in self.moves if move.color == PlayerColor.White)
+        whiteMoves = self.getMovesOf(PlayerColor.White)
         if len(whiteMoves) < game_settings.move_repeat_to_draw * 2:
             return False
 

@@ -1,11 +1,12 @@
 from ai.neural_network import NeuralNetwork
 from ai.feature_extractor import FeatureExtractor
+import os
 
 class SmartEvaluator:
     predictionMemory = dict()
 
     def __init__(self, epochs):
-        self.filePath = "C:/Users/Konrad/Documents/AGH/PSI/ai_checkers/ai/games.csv"
+        self.filePath = os.getcwd() + "/ai/games.csv"
         self.neuralNetwork = NeuralNetwork(8)
         self.neuralNetwork.fitToCsv(self.filePath, epochs)
 

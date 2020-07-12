@@ -26,15 +26,13 @@ class Board():
     def setupBoard(self):
         for row in range(self.size):
             for col in range(self.size):
-                pos = (col * self.blockSize, row * self.blockSize)
-                size = (self.blockSize, self.blockSize)
-                self.squares[row, col] = BoardSquare(self.getSquareColor(row, col), pos, size)
+                self.squares[row, col] = BoardSquare(self.getSquareColor(row, col), (col, row), self.blockSize)
 
     def __init__(self):
         self.size = 8
-        self.squares = matrix([[None] * self.size] * self.size)
+        self.squares = np.matrix([[None] * self.size] * self.size)
 
-        self.blockSize = 100
+        self.blockSize = 80
 
         self.setupBoard()
 
@@ -53,9 +51,7 @@ class Board():
         return np.asarray(self.squares).reshape(-1)
 
     def getSquarePosition(self, square):
-        for pos, _square in np.ndenumerate(self.squares):
-            if _square == square:
-                return pos
+        return (square.pos[1], square.pos[0])
 
     def getArmy(self, color):
         return list(square.piece for square in self.getSquareList() if square.piece and square.piece.color == color)

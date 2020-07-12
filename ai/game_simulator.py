@@ -55,8 +55,8 @@ class GameSimulator:
                 pygame.display.flip()
                 clock.tick(60)
 
-    def simulateAndSave(self, gamesToPlay):
-        file = []
+    def simulateAndSave(self, gamesToPlay, file_path):
+        records_to_save = []
 
         randomMoveTotal = 6
 
@@ -69,8 +69,8 @@ class GameSimulator:
             states = FeatureExtractor.extractFeaturesFromGameData(gameData)
             labels = self.getResultLabels(gameData.state)
 
-            file.extend(list(chain(features + labels for features in states)))
+            records_to_save.extend(list(chain(features + labels for features in states)))
 
         sys.stdout.write(f"\rGames processed: {gamesToPlay}/{gamesToPlay} [{'='*progressBarLength}]\n")
         
-        addRows(file)
+        addRows(records_to_save, file_path)

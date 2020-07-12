@@ -1,8 +1,6 @@
 import numpy as np
 import csv
 
-filePath = "ai/games.csv"
-
 def read_csv(file_path):
     columnNames = None
     matrix = []
@@ -14,8 +12,8 @@ def read_csv(file_path):
     array = np.array(matrix)
     return array, columnNames
 
-def addRows(rowList):
-    with open(filePath, 'wt') as file:
+def addRows(rowList, file_path):
+    with open(file_path, 'wt') as file:
         writer = csv.writer(file, delimiter=',', lineterminator='\n')
         for row in rowList:
             writer.writerow(row)

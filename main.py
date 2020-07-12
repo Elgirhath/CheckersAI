@@ -12,6 +12,7 @@ from tests import e2e_tests as tests
 from game_data import GameState
 from ai.game_simulator import GameSimulator
 from ai.smart_evaluator import SmartEvaluator
+import debug
 
 board = Board()
 board.setupPawns()
@@ -25,15 +26,16 @@ boardBuilder = BoardBuilder(board)
 gameManager = GameManager(board)
 
 # player1 = PlayerController(board, gameManager, PlayerColor.White)
-player1 = AiController(board, gameManager, PlayerColor.White, SmartEvaluator(1))
+player1 = AiController(board, gameManager, PlayerColor.White, SmartEvaluator(2), 4)
 # player2 = PlayerController(board, gameManager, PlayerColor.Black)
-player2 = AiController(board, gameManager, PlayerColor.Black, SmartEvaluator(50))
+player2 = AiController(board, gameManager, PlayerColor.Black, SmartEvaluator(2), 4)
 
 gameManager.setControllers(player1, player2)
 board.display(screen)
 pygame.display.flip()
 
-while True:
+i = 0
+while i < 1:
     ButtonController.update()
 
     for event in pygame.event.get():
@@ -46,7 +48,11 @@ while True:
         print(gameManager.gameData.state)
         sys.exit(0)
 
+    i += 1
+
     screen.fill((0, 0, 0))
     board.display(screen)
     pygame.display.flip()
     clock.tick(60)
+
+print(debug.node_number)
