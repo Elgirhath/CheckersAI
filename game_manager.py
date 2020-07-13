@@ -107,12 +107,14 @@ class GameManager:
         self.updateGameState()
 
     def deselect(self):
-        for square in self.board.getSquareList():
-            square.selected = False
+        for row in self.board.squares:
+            for square in row:
+                square.selected = False
 
     def clearPossibleMoves(self):
-        for square in self.board.getSquareList():
-            square.isPossibleMove = False
+        for row in self.board.squares:
+            for square in row:
+                square.isPossibleMove = False
 
     def changeTurn(self):
         self.pieceToMove = None

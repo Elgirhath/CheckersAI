@@ -18,15 +18,15 @@ class BoardBuilder:
 
         for setting in settings:
             pieceClass = globals()[setting.type.__name__]
-            square = self.board.squares[setting.row, setting.column]
+            square = self.board.squares[setting.row][setting.column]
             square.piece = pieceClass(setting.color, square)
 
     def copy(self, board):
         for i in range(self.board.size):
             for j in range(self.board.size):
-                board_square = self.board.squares[i, j]
+                board_square = self.board.squares[i][j]
                 board_square.piece = None
-                copiedPiece = board.squares[i, j].piece
+                copiedPiece = board.squares[i][j].piece
                 if copiedPiece:
                     piece = copy.copy(copiedPiece)
                     piece.square = board_square

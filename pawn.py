@@ -37,7 +37,7 @@ class Pawn(Piece):
         killed = None
         if abs(row - currentPos[0]) == 2:
             jumpedPiecePos = (int((row + currentPos[0])/2), int((col + currentPos[1])/2))
-            jumpedPiece = board.squares[jumpedPiecePos[0], jumpedPiecePos[1]].piece
+            jumpedPiece = board.squares[jumpedPiecePos[0]][jumpedPiecePos[1]].piece
             if not jumpedPiece:
                 return None
 
@@ -49,4 +49,4 @@ class Pawn(Piece):
             else:
                 killed = jumpedPiece
 
-        return Move(self, board.squares[row, col], killed)
+        return Move(self, board.squares[row][col], killed)

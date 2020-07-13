@@ -21,9 +21,9 @@ class Move:
     @staticmethod
     def fromNumericalExpression(numerical, board):
         (piecePos, desSquarePos, killedPiecePos) = numerical
-        piece = board.squares[piecePos[0], piecePos[1]].piece
-        destSquare = board.squares[desSquarePos[0], desSquarePos[1]]
-        killedPiece = board.squares[killedPiecePos[0], killedPiecePos[1]].piece if killedPiecePos else None
+        piece = board.squares[piecePos[0]][piecePos[1]].piece
+        destSquare = board.squares[desSquarePos[0]][desSquarePos[1]]
+        killedPiece = board.squares[killedPiecePos[0]][killedPiecePos[1]].piece if killedPiecePos else None
         return Move(piece, destSquare, killedPiece)
 
     def switchBoard(self, srcBoard, destBoard):

@@ -34,8 +34,7 @@ gameManager.setControllers(player1, player2)
 board.display(screen)
 pygame.display.flip()
 
-i = 0
-while i < 1:
+while True:
     ButtonController.update()
 
     for event in pygame.event.get():
@@ -48,11 +47,7 @@ while i < 1:
         print(gameManager.gameData.state)
         sys.exit(0)
 
-    i += 1
-
     screen.fill((0, 0, 0))
     board.display(screen)
     pygame.display.flip()
     clock.tick(60)
-
-print(debug.node_number)

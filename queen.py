@@ -43,12 +43,12 @@ class Queen(Piece):
             sign = lambda x: (1, -1)[x<0]
             jumpedPieceRow = row - sign(row - currentPos[0])
             jumpedPieceCol = col - sign(col - currentPos[1])
-            jumpedPiece = board.squares[jumpedPieceRow, jumpedPieceCol].piece
+            jumpedPiece = board.squares[jumpedPieceRow][jumpedPieceCol].piece
 
             for i in range(1, distance - 1):
                 rowToCheck = currentPos[0] + sign(row - currentPos[0]) * i
                 colToCheck = currentPos[1] + sign(col - currentPos[1]) * i
-                if board.squares[rowToCheck, colToCheck].piece:
+                if board.squares[rowToCheck][colToCheck].piece:
                     return None
 
             if jumpedPiece:
@@ -56,4 +56,4 @@ class Queen(Piece):
                     return None
                 killed = jumpedPiece
 
-        return Move(self, board.squares[row, col], killed)
+        return Move(self, board.squares[row][col], killed)
