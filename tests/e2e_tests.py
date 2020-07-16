@@ -1,5 +1,5 @@
-from pawn import Pawn
-from queen import Queen
+from checkers.piece.pawn import Pawn
+from checkers.piece.queen import Queen
 
 def setup(boardBuilder):
     white = [

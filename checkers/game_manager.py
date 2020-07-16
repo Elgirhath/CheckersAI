@@ -1,7 +1,7 @@
-from player_color import PlayerColor
-from pawn import Pawn
-from queen import Queen
-from game_data import GameData, GameState
+from checkers.player_color import PlayerColor
+from checkers.piece.pawn import Pawn
+from checkers.piece.queen import Queen
+from checkers.game_data import GameData, GameState
 
 class GameManager:
     def __init__(self, board, turnColor = PlayerColor.White):

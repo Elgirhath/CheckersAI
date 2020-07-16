@@ -3,16 +3,16 @@ import sys
 
 from controllers.ai_controller import AiController
 from controllers.player_controller import PlayerController
-from board import Board
-from board_builder import BoardBuilder
-from button_controller import ButtonController
-from game_manager import GameManager
-from player_color import PlayerColor
+from checkers.board.board import Board
+from checkers.board.board_builder import BoardBuilder
+from checkers.board.button_controller import ButtonController
+from checkers.game_manager import GameManager
+from checkers.player_color import PlayerColor
 from tests import e2e_tests as tests
-from game_data import GameState
+from checkers.game_data import GameState
 from ai.game_simulator import GameSimulator
 from ai.smart_evaluator import SmartEvaluator
-import debug
+import checkers.debug
 
 board = Board()
 board.setupPawns()

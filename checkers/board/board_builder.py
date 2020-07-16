@@ -1,6 +1,6 @@
-from player_color import PlayerColor
-from pawn import Pawn
-from queen import Queen
+from checkers.player_color import PlayerColor
+from checkers.piece.pawn import Pawn
+from checkers.piece.queen import Queen
 import copy
 
 white = PlayerColor.White

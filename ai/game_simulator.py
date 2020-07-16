@@ -1,9 +1,9 @@
 from controllers.ai_controller import AiController
 from controllers.random_controller import RandomController
-from board import Board
-from game_manager import GameManager
-from player_color import PlayerColor
-from game_data import GameState
+from checkers.board.board import Board
+from checkers.game_manager import GameManager
+from checkers.player_color import PlayerColor
+from checkers.game_data import GameState
 import pygame
 from ai.utils import addRows
 import sys

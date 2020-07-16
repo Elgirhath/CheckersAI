@@ -1,4 +1,4 @@
-from button_controller import ButtonController
+from checkers.board.button_controller import ButtonController
 
 class PlayerController():
     def __init__(self, board, gameManager, color):

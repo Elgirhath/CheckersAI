@@ -1,4 +1,4 @@
-from player_color import PlayerColor
+from checkers.player_color import PlayerColor
 import abc
 import pygame
 

@@ -1,9 +1,9 @@
-from player_color import PlayerColor
-from pawn import Pawn
-from queen import Queen
-from game_manager import GameManager
+from checkers.player_color import PlayerColor
+from checkers.piece.pawn import Pawn
+from checkers.piece.queen import Queen
+from checkers.game_manager import GameManager
 from ai.virtualizer import *
-from move import Move
+from checkers.move import Move
 
 class FeatureExtractor:
     def __init__(self, gameManager):

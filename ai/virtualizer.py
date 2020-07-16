@@ -1,6 +1,6 @@
-from board import Board
-from board_builder import BoardBuilder
-from game_manager import GameManager
+from checkers.board.board import Board
+from checkers.board.board_builder import BoardBuilder
+from checkers.game_manager import GameManager
 import copy
 
 def createVirtualBoard(board):

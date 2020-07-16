@@ -3,10 +3,10 @@ from enum import Enum
 
 import ai.virtualizer as virtualizer
 from ai.static_evaluator import StaticEvaluator
-from player_color import PlayerColor
-from game_data import GameState
-import game_settings
-import debug
+from checkers.player_color import PlayerColor
+from checkers.game_data import GameState
+from checkers import game_settings
+from checkers import debug
 
 class Type(Enum):
     Maximizer = False

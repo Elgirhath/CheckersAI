@@ -1,6 +1,6 @@
-from player_color import PlayerColor
+from checkers.player_color import PlayerColor
 import pygame
-from button import Button
+from checkers.board.button import Button
 
 whiteSquareColor = (255, 255, 255)
 blackSquareColor = (181, 136, 99)

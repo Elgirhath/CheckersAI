@@ -1,7 +1,7 @@
-from piece import Piece
-from move import Move
+from checkers.piece.piece import Piece
+from checkers.move import Move
 import pygame
-from player_color import PlayerColor
+from checkers.player_color import PlayerColor
 
 whiteIcon = './graphics/white_queen.png'
 blackIcon = './graphics/black_queen.png'

@@ -1,6 +1,6 @@
-from piece import Piece
-from player_color import PlayerColor
-from move import Move
+from checkers.piece.piece import Piece
+from checkers.player_color import PlayerColor
+from checkers.move import Move
 import pygame
 
 whiteIcon = pygame.image.load('./graphics/white_pawn.png')

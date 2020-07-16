@@ -1,6 +1,6 @@
-from pawn import Pawn
-from player_color import PlayerColor
-from board_square import BoardSquare
+from checkers.piece.pawn import Pawn
+from checkers.player_color import PlayerColor
+from checkers.board.board_square import BoardSquare
 
 class Board():
     def getSquareColor(self, row, col):

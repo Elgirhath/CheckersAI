@@ -1,4 +1,4 @@
-from button_controller import ButtonController
+from checkers.board.button_controller import ButtonController
 
 class Button():
     def __init__(self, position, size):

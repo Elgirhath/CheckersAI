@@ -1,7 +1,7 @@
 from enum import Enum
-from player_color import PlayerColor
-from queen import Queen
-import game_settings
+from checkers.player_color import PlayerColor
+from checkers.piece.queen import Queen
+from checkers import game_settings
 
 class GameState(Enum):
     InProgress = 0
@@ -34,7 +34,7 @@ class GameData:
             del self.moves[0 : move_overhead]
 
     def getMovesOf(self, player_color):
-        return list(move for move in self.moves if move.color == PlayerColor.Black)
+        return list(move for move in self.moves if move.color == player_color)
 
     def isDraw(self):
         blackMoves = self.getMovesOf(PlayerColor.Black)
