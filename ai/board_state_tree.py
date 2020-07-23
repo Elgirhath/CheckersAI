@@ -6,7 +6,6 @@ from ai.static_evaluator import StaticEvaluator
 from checkers.player_color import PlayerColor
 from checkers.game_data import GameState
 from checkers import game_settings
-from checkers import debug
 
 class Type(Enum):
     Maximizer = False
@@ -83,7 +82,6 @@ class BoardStateTree:
         return self
 
     def createChildNode(self, move, board):
-        debug.node_number += 1
         virtualBoard = virtualizer.createVirtualBoard(board)
 
         virtualMove = move.switchBoard(board, virtualBoard)

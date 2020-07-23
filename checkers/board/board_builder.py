@@ -11,10 +11,11 @@ class BoardBuilder:
         self.board = board
 
     def build(self, settings):
-        for square in self.board.getSquareList():
-            if square.piece:
-                square.piece.square = None
-            square.piece = None
+        for row in self.board.squares:
+            for square in row:
+                if square.piece:
+                    square.piece.square = None
+                square.piece = None
 
         for setting in settings:
             pieceClass = globals()[setting.type.__name__]

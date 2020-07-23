@@ -1,6 +1,5 @@
 from time import time, sleep
 from ai.board_state_tree import BoardStateTree
-from ai.smart_evaluator import SmartEvaluator
 
 timePerMove = 0.
 

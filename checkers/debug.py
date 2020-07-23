@@ -1,1 +1,0 @@
-node_number = 1 # root included

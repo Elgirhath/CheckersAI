@@ -34,7 +34,7 @@ class Board():
 
         self.setupBoard()
 
-    def setupUI(self):
+    def setupButtons(self):
         for row in range(self.size):
             for col in range(self.size):
                 self.squares[row][col].makeButton()

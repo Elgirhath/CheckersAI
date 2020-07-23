@@ -12,5 +12,5 @@ def createVirtualGameManager(gameManager, virtualBoard):
     nextTurnColor = gameManager.turnColor
     virtualGameManager = GameManager(virtualBoard, nextTurnColor)
     virtualGameManager.pieceToMove = gameManager.pieceToMove
-    virtualGameManager.gameData = copy.copy(gameManager.gameData)
+    virtualGameManager.gameData = copy.deepcopy(gameManager.gameData)
     return virtualGameManager

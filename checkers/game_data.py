@@ -26,7 +26,7 @@ class GameData:
     def addMove(self, color, pieceType, move):
         sourcePos, destPos, killedPos = move
         self.moves.append(MoveRecord(color, pieceType, sourcePos, destPos, killedPos))
-        self.cleanOverhead()
+        # self.cleanOverhead()
 
     def cleanOverhead(self):
         move_overhead = len(self.moves) - game_settings.moves_to_keep

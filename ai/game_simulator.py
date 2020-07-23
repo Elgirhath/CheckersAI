@@ -36,7 +36,7 @@ class GameSimulator:
         gameManager.setControllers(random1, random2)
 
         if use_gui:
-            board.setupUI()
+            board.setupButtons()
             screen = pygame.display.set_mode((board.size * board.blockSize, board.size * board.blockSize))
 
         while True:

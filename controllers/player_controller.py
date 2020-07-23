@@ -9,8 +9,9 @@ class PlayerController():
         self.selectedSquare = None
         
     def select(self, square):
-        for _square in self.board.getSquareList():
-            _square.selected = False
+        for row in self.board.squares:
+            for _square in row:
+                _square.selected = False
         square.selected = True
 
 
@@ -36,17 +37,18 @@ class PlayerController():
             self.selectedSquare = square
         
     def getPressedSquare(self):
-        squareList = self.board.getSquareList()
+        squares = self.board.squares
         pressedButtons = ButtonController.getPressed()
-        for square in squareList:
-            if square.button in pressedButtons:
-                if square.isPossibleMove:
+        for row in squares:
+            for square in row:
+                if square.button in pressedButtons:
+                    if square.isPossibleMove:
+                        return square
+                    if not square.piece:
+                        continue
+                    if square.piece.color != self.gameManager.turnColor:
+                        continue
                     return square
-                if not square.piece:
-                    continue
-                if square.piece.color != self.gameManager.turnColor:
-                    continue
-                return square
 
     def getMove(self):
         pressedSquare = self.getPressedSquare()

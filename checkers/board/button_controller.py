@@ -9,7 +9,7 @@ class ButtonController:
         ButtonController.buttons.append(button)
 
     @staticmethod
-    def update():
+    def updatePressed():
         ButtonController.pressed = []
         for event in pygame.event.get():
             if event.type != pygame.MOUSEBUTTONDOWN:
